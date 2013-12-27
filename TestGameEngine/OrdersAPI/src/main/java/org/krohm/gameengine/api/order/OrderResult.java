@@ -8,9 +8,24 @@ package org.krohm.gameengine.api.order;
  *
  * @author Arnaud
  */
-public interface OrderResult {
+public class OrderResult {
 
-    public long getReturnCode();
+    private long returnCode;
+    private String returnFlavorText;
 
-    public String getReturnFlavorText();
+    public long getReturnCode() {
+        return returnCode;
+    }
+
+    public void setReturnCode(long returnCode) {
+        this.returnCode = returnCode;
+    }
+
+    public String getReturnFlavorText() {
+        return returnFlavorText;
+    }
+
+    public void setReturnFlavorText(String returnFlavorText) {
+        this.returnFlavorText = returnFlavorText;
+    }
 }

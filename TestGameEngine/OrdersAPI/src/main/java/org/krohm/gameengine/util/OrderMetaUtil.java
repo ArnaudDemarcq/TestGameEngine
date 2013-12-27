@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.krohm.gameengine.test;
+package org.krohm.gameengine.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +30,7 @@ public class OrderMetaUtil {
             returnMap.putAll(getMetaDataTerminal(currentInterface));
         }
         returnMap.putAll(getMetaDataTerminal(orderClass));
+        returnMap.put("name", orderClass.getSimpleName());
         return returnMap;
     }
 
