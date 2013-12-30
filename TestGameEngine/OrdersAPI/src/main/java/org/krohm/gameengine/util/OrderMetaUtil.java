@@ -23,7 +23,7 @@ public class OrderMetaUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderMetaUtil.class);
 
-    public static Map<String, Object> getMetaData(Class<Order> orderClass) {
+    public static Map<String, Object> getMetaData(Class<? extends Order> orderClass) {
         Map<String, Object> returnMap = new HashMap<>();
         List<Class> tmpList = ClassUtils.getAllInterfaces(orderClass);
         for (Class currentInterface : tmpList) {
@@ -34,7 +34,7 @@ public class OrderMetaUtil {
         return returnMap;
     }
 
-    private static Map<String, Object> getMetaDataTerminal(Class<Order> currentClass) {
+    private static Map<String, Object> getMetaDataTerminal(Class<? extends Order> currentClass) {
         Map<String, Object> returnMap = new HashMap<>();
         for (Annotation currentAnnotation : currentClass.getAnnotations()) {
             for (Method currentMethod : currentAnnotation.annotationType().getMethods()) {
@@ -53,4 +53,17 @@ public class OrderMetaUtil {
         }
         return returnMap;
     }
+
+    public static Map<Long, Map<String, Object>> getOrdersParameters(Map<Long, Class<? extends Order>> orders) {
+
+        Map<Long, Map<String, Object>> returnMap = new HashMap<>();
+        for (Long currentKey : orders.keySet()) {
+            Class<? extends Order> currentOrderClass = orders.get(currentKey);
+            Map<String, Object> currentParameters = getMetaData(currentOrderClass);
+            returnMap.put(currentKey, currentParameters);
+        }
+        return returnMap;
+    }
+    
+
 }
