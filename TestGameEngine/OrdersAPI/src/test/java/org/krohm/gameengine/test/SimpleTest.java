@@ -7,7 +7,6 @@ package org.krohm.gameengine.test;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.junit.Test;
 import org.krohm.gameengine.api.order.Order;
 import org.krohm.gameengine.util.OrderMetaUtil;
@@ -38,7 +37,7 @@ public class SimpleTest {
     }
 
     private Map<Long, Class<? extends Order>> getTestOrders() {
-        Map<Long, Class<? extends Order>> returnMap = new HashMap<>();
+        Map<Long, Class<? extends Order>> returnMap = new HashMap<Long, Class<? extends Order>>();
         returnMap.put(120254L, AllMightyOrder.class);
         returnMap.put(120255L, SpeakToCharacter.class);
         return returnMap;
