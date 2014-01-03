@@ -11,5 +11,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>OrdersAPI</module>
+    <module>Entities</module>
+    <module>Daos</module>
   </modules>
 </project>
