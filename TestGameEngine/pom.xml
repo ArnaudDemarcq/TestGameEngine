@@ -13,5 +13,6 @@
     <module>OrdersAPI</module>
     <module>Entities</module>
     <module>Daos</module>
+    <module>Site</module>
   </modules>
 </project>
