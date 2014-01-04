@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ACCOUNTS")
 @NamedQueries({
-    @NamedQuery(name = "Account.findByLoginPassword", query = "SELECT a FROM Account a WHERE a.login=:login AND a.password==:password")})
+    @NamedQuery(name = "Account.findByLoginPassword", query = "SELECT a FROM Account a WHERE a.login = :login AND a.password = :password")})
 public class Account {
 
     @Id
