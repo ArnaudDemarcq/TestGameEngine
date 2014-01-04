@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.*;
@@ -16,6 +18,7 @@ import org.apache.wicket.markup.html.list.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.krohm.gameengine.site.pages.MainPage.panels.LanguagePanel;
 import org.krohm.gameengine.site.util.GetStringModel;
 import org.krohm.gameengine.site.wicket.security.WicketWebSession;
@@ -25,29 +28,37 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lelo Nyaka
  */
-@AuthorizeInstantiation({BasePage.ROLE_AUTH})
+//@AuthorizeInstantiation({BasePage.ROLE_AUTH})
 public abstract class BasePage extends WebPage {
-
+    
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BasePage.class);
     public static final String ROLE_AUTH = "_AUTH";
     public static final String ROLE_CREDIT_HISTORY = "_CREDITHISTORY";
     public static final String ROLE_REPORTS = "_REPORTS";
     public static final String ROLE_STARTSTOP = "_STARTSTOP";
-
+    // Ressources 
+    private static final CssResourceReference STYLE_CSS = new CssResourceReference(BasePage.class, "style.css");
+    
     public BasePage(final PageParameters params) {
         super(params);
         init();
     }
-
+    
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(CssReferenceHeaderItem.forReference(STYLE_CSS));
+    }
+    
     abstract protected IModel<String> getTitle();
-
+    
     private void init() {
         // Feedback
         FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
         add(feedbackPanel);
         // language
         add(new LanguagePanel("languagePanel"));
-
+        
         Link logoutLink = new Link("logout") {
             @Override
             public void onClick() {
@@ -59,7 +70,7 @@ public abstract class BasePage extends WebPage {
         String userID = WicketWebSession.get().getUserId();
         Label userNameLabel = new Label("username", userID);
         add(userNameLabel);
-
+        
         Link homelink = new BookmarkablePageLink("home", HomePage.class);
         add(homelink);
         Label titleLabel = new Label("title", getTitle());
@@ -83,61 +94,59 @@ public abstract class BasePage extends WebPage {
             }
         });/**/
     }
-
+    
     private List<ClassLinkLabel> getClassLinkLabel() {
         List<ClassLinkLabel> returnList = new ArrayList<ClassLinkLabel>();
         Roles currentUserRoles = WicketWebSession.get().getRoles();
-       
+        
         return returnList;
     }
-
-   
-
+    
     private ClassLinkLabel getClassLinkLabel(Class clazz, String key) {
         return new ClassLinkLabel(clazz, new GetStringModel(this, key));
     }
-
+    
     private ClassLinkLabel getClassLinkLabel(Class clazz, String key, List<ClassLinkLabel> subLinkLabel) {
         return new ClassLinkLabel(clazz, new GetStringModel(this, key), subLinkLabel);
     }
-
+    
     private class ClassLinkLabel implements Serializable {
-
+        
         private Class linkClass;
         private IModel<String> linkLabel;
         private final List<ClassLinkLabel> subLinkLabel = new ArrayList<ClassLinkLabel>();
-
+        
         public ClassLinkLabel(Class linkClass, IModel<String> linkLabelModel, List<ClassLinkLabel> subLinkLabel) {
             this.linkClass = linkClass;
             this.linkLabel = linkLabelModel;
             this.subLinkLabel.addAll(subLinkLabel);
         }
-
+        
         public ClassLinkLabel(Class linkClass, IModel<String> linkLabelModel) {
             this.linkClass = linkClass;
             this.linkLabel = linkLabelModel;
         }
-
+        
         public List<ClassLinkLabel> getSubLinkLabel() {
             return subLinkLabel;
         }
-
+        
         public void setSubLinkLabel(List<ClassLinkLabel> subLinkLabel) {
             this.subLinkLabel.addAll(subLinkLabel);
         }
-
+        
         public Class getLinkClass() {
             return linkClass;
         }
-
+        
         public void setLinkClass(Class linkClass) {
             this.linkClass = linkClass;
         }
-
+        
         public IModel<String> getLinkLabel() {
             return linkLabel;
         }
-
+        
         public void setLinkLabel(IModel<String> linkLabel) {
             this.linkLabel = linkLabel;
         }

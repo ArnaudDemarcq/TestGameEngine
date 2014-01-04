@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+#page-container{
+    margin: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+#page-header-bar{
+    background-color: #3b5998;
+    margin: 0;
+    position: relative !important;
+    border-bottom: 1px solid #133783;
+    min-width: 981px;
+    min-height: 37px;
+}
+
+#page-header-auth-div{
+    position: relative;
+    float: right;
+    display: block;
+    font-size: 11px;
+    min-width: 200px;
+    min-height: 37px;
+    border-left: 1px solid #FFFFFF;
+}
+
+#page-left-panel{
+    position: absolute;
+    top: 37px;
+    width: 200px;
+    height: 100%;
+    border-right: 1px solid #000000;
+}
+
+#OLD{
+    position: absolute;
+    left: 205px;
+}
