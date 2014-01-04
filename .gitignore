@@ -1,2 +1,5 @@
 target
 *.epoch
+*.out
+*.lck
+*.log
